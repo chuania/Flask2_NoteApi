@@ -8,3 +8,6 @@ tmp/
 *.pyc
 *.log
 *.pot
+*.code-workspace
+.DS_Store
+.vscode/
