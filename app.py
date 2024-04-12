@@ -9,6 +9,12 @@ from api.handlers import auth, note, user
 # Update --> PUT
 # Delete --> DELETE
 
+# Note URLs
+docs.register(note.get_notes)
+docs.register(note.get_note_by_id)
+docs.register(note.create_note)
+docs.register(note.edit_note)
+docs.register(note.delete_note)
 # User URLs
 docs.register(user.get_user_by_id)
 docs.register(user.get_users)
@@ -16,5 +22,5 @@ docs.register(user.create_user)
 docs.register(user.edit_user)
 docs.register(user.delete_user)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=Config.DEBUG, port=Config.PORT)

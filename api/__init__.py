@@ -11,21 +11,19 @@ from flask_apispec.extension import FlaskApiSpec
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config.update({
-   'APISPEC_SPEC': APISpec(
-       title='Notes Project',
-       version='v1',
-       plugins=[MarshmallowPlugin()],
-        securityDefinitions={
-            "basicAuth": {
-                "type": "basic"
-            }
-        },
-       openapi_version='2.0.0'
-   ),
-   'APISPEC_SWAGGER_URL': '/swagger', # URI API Doc JSON
-   'APISPEC_SWAGGER_UI_URL': '/swagger-ui'# URI UI of API Doc
-})
+app.config.update(
+    {
+        "APISPEC_SPEC": APISpec(
+            title="Notes Project",
+            version="v1",
+            plugins=[MarshmallowPlugin()],
+            securityDefinitions={"basicAuth": {"type": "basic"}},
+            openapi_version="2.0.0",
+        ),
+        "APISPEC_SWAGGER_URL": "/swagger",  # URI API Doc JSON
+        "APISPEC_SWAGGER_UI_URL": "/swagger-ui",  # URI UI of API Doc
+    }
+)
 
 
 ctx = app.app_context()
@@ -34,7 +32,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
 basic_auth = HTTPBasicAuth()
-token_auth = HTTPTokenAuth('Bearer')
+token_auth = HTTPTokenAuth("Bearer")
 multi_auth = MultiAuth(basic_auth, token_auth)
 swagger = Swagger(app)
 docs = FlaskApiSpec(app)
@@ -43,6 +41,7 @@ docs = FlaskApiSpec(app)
 @basic_auth.verify_password
 def verify_password(username, password):
     from api.models.user import UserModel
+
     user = UserModel.query.filter_by(username=username).first()
     if not user or not user.verify_password(password):
         return False
@@ -52,6 +51,7 @@ def verify_password(username, password):
 @token_auth.verify_token
 def verify_token(token):
     from api.models.user import UserModel
+
     user = UserModel.verify_auth_token(token)
     return user
 
@@ -60,8 +60,7 @@ def verify_token(token):
 def get_user_roles(user):
     return user.get_roles()
 
+
 @token_auth.get_user_roles
 def get_user_roles(user):
     return user.get_roles()
-
-

@@ -6,7 +6,7 @@ from flask_apispec import doc, marshal_with, use_kwargs
 
 
 @app.route("/users/<int:user_id>", methods=["GET"])
-@doc(description='Api for only user.', tags=['Users'], summary="Get user by id")
+@doc(description="Api for only user.", tags=["Users"], summary="Get user by id")
 @marshal_with(UserSchema, code=200)
 def get_user_by_id(user_id):
     user = get_object_or_404(UserModel, user_id)
@@ -16,7 +16,7 @@ def get_user_by_id(user_id):
 
 
 @app.route("/users")
-@doc(description='Api for all users.', tags=['Users'])
+@doc(description="Api for all users.", tags=["Users"])
 @marshal_with(UserSchema(many=True), code=200)
 def get_users():
     users = UserModel.query.all()
@@ -24,9 +24,9 @@ def get_users():
 
 
 @app.route("/users", methods=["POST"])
-@doc(description='Create user', tags=['Users'], summary="Create user")
+@doc(description="Create user", tags=["Users"], summary="Create user")
 @marshal_with(UserSchema, code=201)
-@use_kwargs(UserRequestSchema, location='json')
+@use_kwargs(UserRequestSchema, location="json")
 def create_user(**kwargs):
     user = UserModel(**kwargs)
     # DONE: добавить обработчик на создание пользователя с неуникальным username
@@ -37,9 +37,9 @@ def create_user(**kwargs):
 
 
 @app.route("/users/<int:user_id>", methods=["PUT"])
-@doc(description='Edit user.', tags=['Users'], summary="Edit user")
+@doc(description="Edit user.", tags=["Users"], summary="Edit user")
 @marshal_with(UserSchema, code=200)
-@use_kwargs(UserRequestSchema, location='json')
+@use_kwargs(UserRequestSchema, location="json")
 @doc(security=[{"basicAuth": []}])
 @doc(responses={"401": {"description": "Unauthorized"}})
 @doc(responses={"404": {"description": "Not found"}})
@@ -53,7 +53,7 @@ def edit_user(user_id, **kwargs):
 
 
 @app.route("/users/<int:user_id>", methods=["DELETE"])
-@doc(description='Delete user by id.', tags=['Users'], summary="Delete user by id")
+@doc(description="Delete user by id.", tags=["Users"], summary="Delete user by id")
 @doc(responses={"404": {"description": "Not found"}})
 @multi_auth.login_required(role="admin")
 def delete_user(user_id):
@@ -64,4 +64,4 @@ def delete_user(user_id):
     """
     user = get_object_or_404(UserModel, user_id)
     user.delete()
-    return {"message": f'User with id={user_id} has deleted.'}, 200
+    return {"message": f"User with id={user_id} has deleted."}, 200

@@ -6,6 +6,8 @@ from api.schemas.user import UserSchema
 #       schema        flask-restful
 # object ------>  dict ----------> json
 
+
+# Сереализация
 class NoteSchema(ma.SQLAlchemySchema):
     class Meta:
         model = NoteModel
@@ -16,7 +18,10 @@ class NoteSchema(ma.SQLAlchemySchema):
     author = ma.Nested(UserSchema())
 
 
+# Десериализация запроса(request)
+class NoteRequestSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = NoteModel
 
-
-note_schema = NoteSchema()
-notes_schema = NoteSchema(many=True)
+    text = ma.auto_field()
+    private = ma.auto_field()
