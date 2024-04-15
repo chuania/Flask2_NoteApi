@@ -8,6 +8,7 @@ from base64 import b64encode
 
 @pytest.fixture()
 def application():
+    app.config.update({"SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"})
     with app.app_context():
         db.create_all()
         yield app
@@ -31,8 +32,10 @@ def user_admin():
 def auth_headers(user_admin):
     user_data = {"username": "admin", "password": "admin", "role": "admin"}
     headers = {
-        'Authorization': 'Basic ' + b64encode(
-            f"{user_data['username']}:{user_data['password']}".encode('ascii')).decode('utf-8')
+        "Authorization": "Basic "
+        + b64encode(
+            f"{user_data['username']}:{user_data['password']}".encode("ascii")
+        ).decode("utf-8")
     }
     return headers
 
@@ -49,7 +52,9 @@ def user():
 def auth_headers_user(user):
     user_data = {"username": "testuser", "password": "1234"}
     headers = {
-        'Authorization': 'Basic ' + b64encode(
-            f"{user_data['username']}:{user_data['password']}".encode('ascii')).decode('utf-8')
+        "Authorization": "Basic "
+        + b64encode(
+            f"{user_data['username']}:{user_data['password']}".encode("ascii")
+        ).decode("utf-8")
     }
     return headers
