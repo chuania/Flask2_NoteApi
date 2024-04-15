@@ -14,6 +14,9 @@ passlib = "*"
 flask-httpauth = "*"
 pytest = "*"
 coverage = "*"
+flasgger = "*"
+apispec = "*"
+flask_apispec = "*"
 
 [dev-packages]
 
