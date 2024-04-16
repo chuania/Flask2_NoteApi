@@ -13,7 +13,7 @@
 4. Создаем базу данных: `flask db upgrade`
 5. Запускаем проект: `pipenv run python app.py`
 6. Для тестирования API используем Swagger: http://127.0.0.1:5000/swagger-ui 
-7. Тестирование pytest: в директории tests вводим `pytest`
+7. Тестирование pytest: `pytest`(директория tests)
 
 
 ## Дополнительный команды 
